@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学生信息表头（内框架）</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='studnet',Url='list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                                <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                        <div class="iq-header-title">
+                                            <h4 class="card-title">学生信息</h4>
+                                        </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                        <form>
+                                            <div class="form-group row align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="profile-img-edit">
+                                                        <img class="profile-pic" th:src="@{'/uploads/images/'+${Stu.stuPic}}" alt="profile-pic">
+                                                    </div>
+                                                    <button style="float: right" type="button" class="btn mb-3 btn-primary rounded-pill"><i class="ri-bill-fill"></i><a style="color: white" th:href="@{/score/personalList(stuNumber=${Stu.stuNumber})}">查看成绩</a></button>
+                                                </div>
+                                            </div>
+                                            <div class=" row align-items-center">
+                                                <div class="form-group col-sm-6">
+                                                    <label for="fname">姓名:</label>
+                                                    <p style="font-weight: bolder" id="fname" th:text="${Stu.name}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="lname">专业班级:</label>
+                                                    <p style="font-weight: bolder" id="lname" th:text="${Stu.majorClass}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="aname">专业全称:</label>
+                                                    <p style="font-weight: bolder" id="aname" th:text="${Stu.major}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="uname">学号:</label>
+                                                    <p style="font-weight: bolder" id="uname" th:text="${Stu.stuNumber}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="cname">宿舍地址:</label>
+                                                    <p style="font-weight: bolder" id="cname" th:text="${Stu.dormNumber}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="sex" class="d-block">性别:</label>
+                                                    <p style="font-weight: bolder" id="sex" th:text="${Stu.sex}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="age" class="d-block">年龄:</label>
+                                                    <p style="font-weight: bolder" id="age" th:text="${Stu.age}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="dob">入学日期:</label>
+                                                    <p style="font-weight: bolder" id="dob" th:text="${#dates.format(Stu.stuDay, 'yyyy-MM-dd')}"></p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

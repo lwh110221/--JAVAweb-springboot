@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springweb.dao.gradeMapper">
+    <select id="queryAll" resultMap="gradeMap">
+        select st_grade.stuNumber,st_grade.couId,st_name.name,st_course.couName,grade,point,st_course.major
+        from st_course,st_name,st_grade
+        where st_grade.stuNumber=st_name.stuNumber and st_grade.couId=st_course.couId
+    </select>
+    <select id="querySingle" resultMap="gradeMap">
+        select * from score
+        where name=#{searchContent} or stuNumber=#{searchContent} or couName=#{searchContent} or major=#{searchContent}
+    </select>
+    <resultMap id="gradeMap" type="grade" autoMapping="true">
+        <association property="student" javaType="student">
+            <id property="stuNumber" column="stuNumber"/>
+            <result property="name" column="name"/>
+        </association>
+        <association property="course" javaType="course">
+            <id property="couId" column="couId"/>
+            <result property="couName" column="couName"/>
+            <result property="major" column="major"/>
+        </association>
+    </resultMap>
+    <delete id="deleteGrade" >
+        delete from st_grade where couId=#{couId} and stuNumber=#{stuNumber}
+    </delete>
+    <select id="queryElect" resultType="course">
+        SELECT st_course.couId,st_course.couName
+        FROM st_course
+        WHERE  (major='通识教育' OR major=#{major}) AND st_course.couID NOT IN(
+            SELECT couID
+            FROM st_grade
+            WHERE stuNumber=#{stuNumber})
+    </select>
+    <insert id="addGrade" parameterType="grade">
+        insert into st_grade(stuNumber, couId, grade, point) VALUES (#{stuNumber},#{couId},#{grade},#{point})
+    </insert>
+    <select id="queryByNum" resultType="grade">
+        select * from st_grade where stuNumber=#{stuNumber} and couId=#{couId}
+    </select>
+    <update id="updateGrade" parameterType="grade">
+        update st_grade set grade=#{grade},point=#{point} where couId=#{couId} and stuNumber=#{stuNumber}
+    </update>
+</mapper>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>绩点信息</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='score',Url='score/pointList')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">总专业绩点排名</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>该页面的信息无法编辑与新增</p>
+                            <nav class="iq-sidebar-menu" style="width: 200px">
+                                <ul id="iq-sidebar-toggle" class="iq-menu">
+                                    <li>
+                                        <a href="#map-page" class="iq-waves-effect collapsed" data-toggle="collapse" aria-expanded="false"><i class="ri-map-pin-user-line"></i><span th:text="${major}"></span><i class="ri-arrow-right-s-line iq-arrow-right"></i></a>
+                                        <ul id="map-page" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
+                                            <li><a th:href="@{/score/pointList(major='计算机科学与技术')}">计算机科学与技术</a></li>
+											<li><a th:href="@{/score/pointList(major='工商管理')}">工商管理</a></li>
+											<li><a th:href="@{/score/pointList(major='动物医学')}">动物医学</a></li>
+											<li><a th:href="@{/score/pointList(major='农学')}">农学</a></li>
+											<li><a th:href="@{/score/pointList(major='人文教育')}">人文教育</a></li>
+											
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">排名</th>
+                                    <th scope="col">名称</th>
+                                    <th scope="col">专业班级</th>
+                                    <th scope="col">平均绩点</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="list,itemState:${pointList}">
+                                    <th scope="row" th:text="${itemState.count}"></th>
+                                    <td th:text="${list.name}"></td>
+                                    <td th:text="${list.majorClass}"></td>
+                                    <td th:text="${list.avgPoint}"></td>
+                                </tr>
+                                <tr th:if="${pointList.isEmpty()}">
+                                    <td>暂无信息，请选择专业</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

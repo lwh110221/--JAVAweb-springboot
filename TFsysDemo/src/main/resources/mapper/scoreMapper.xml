@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springweb.dao.scoreMapper">
+    <select id="queryByName" resultType="subject" parameterType="String">
+        select sn.`name`, gr.grade
+        from st_grade gr
+                 LEFT JOIN st_name sn on gr.stuNumber = sn.stuNumber
+                 LEFT JOIN st_course sc on gr.couId = sc.couId
+        WHERE sc.couName = #{couName}
+        ORDER BY gr.grade DESC
+    </select>
+    <select id="queryByNum" resultType="personal" parameterType="String">
+        select gr.grade, gr.point, sc.couName,sn.`name`
+        from st_grade gr
+                 LEFT JOIN st_name sn on gr.stuNumber = sn.stuNumber
+                 LEFT JOIN st_course sc on gr.couId = sc.couId
+        WHERE sn.stuNumber = #{stuNumber}
+        ORDER BY gr.grade DESC
+    </select>
+    <select id="queryByMajor" parameterType="String" resultType="allPoint">
+        SELECT score.name,score.stuNumber,st_name.majorClass,AVG(point) AS AvgPoint
+        FROM score,st_name
+        WHERE score.stuNumber=st_name.stuNumber AND st_name.major=#{major}
+        GROUP BY score.stuNumber
+        ORDER BY AVG(point) DESC
+    </select>
+</mapper>

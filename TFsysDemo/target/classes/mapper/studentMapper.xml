@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springweb.dao.studentMapper">
+    <select id="queryAll" resultType="student">
+        select *from st_name
+    </select>
+    <select id="queryByNum" resultType="student">
+        select *from st_name where stuNumber=#{stuNumber}
+    </select>
+    <insert id="addStu" parameterType="student">
+        insert into st_name(name, stuNumber, age, dormNumber, sex, majorClass, stuDay,stuPic,major)
+        VALUES (#{name},#{stuNumber},#{age},#{dormNumber},#{sex},#{majorClass},#{stuDay},#{stuPic},#{major})
+    </insert>
+    <update id="updateStu" parameterType="student">
+        update st_name
+        <set>
+            name=#{name},age=#{age},dormNumber=#{dormNumber},sex=#{sex},majorClass=#{majorClass},stuDay=#{stuDay},major=#{major},
+            <if test="stuPic !=null">stuPic=#{stuPic}</if>
+        </set>
+        where stuNumber=#{stuNumber}
+    </update>
+    <delete id="deleteStu" parameterType="string">
+        delete from st_name where stuNumber=#{stuNumber}
+    </delete>
+</mapper>

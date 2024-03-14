@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springweb.dao.dormMapper">
+    <select id="queryAll" resultType="dorm">
+        select *from st_dorm
+    </select>
+    <insert id="addDorm" parameterType="dorm">
+        insert into st_dorm(dormNum, dormAddress) VALUES (#{dormNum},#{dormAddress})
+    </insert>
+    <update id="updateDorm" parameterType="dorm">
+        update st_dorm set dormNum=#{dormNum},dormAddress=#{dormAddress} where dormId=#{dormId}
+    </update>
+    <delete id="deleteDorm" parameterType="int">
+        delete from st_dorm where dormId=#{dormId}
+    </delete>
+    <select id="queryById" resultType="dorm">
+        select * from st_dorm where dormId=#{dormId}
+    </select>
+    <select id="querySingle" resultType="dorm">
+        select *
+        from st_dorm where dormAddress=#{dormAddress} and dormNum=#{dormNum}
+    </select>
+</mapper>

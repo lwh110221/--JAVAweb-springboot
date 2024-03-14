@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springweb.dao.courseMapper">
+    <select id="queryAllCom" resultType="course">
+        select *from computer
+    </select>
+    <select id="queryAllSoft" resultType="course">
+        select *from software
+    </select>
+    <select id="queryAll" resultType="course">
+        select *from st_course
+    </select>
+    <insert id="addCou" parameterType="course">
+        insert into st_course(couName, couGrade, couTime,major)
+        VALUES (#{couName},#{couGrade},#{couTime},#{major})
+    </insert>
+    <update id="updateCou" parameterType="course">
+        update st_course set couName=#{couName},couGrade=#{couGrade},couTime=#{couTime} where couId=#{couId}
+    </update>
+    <delete id="deleteCou" parameterType="int">
+        delete from st_course where couId=#{couId}
+    </delete>
+    <select id="queryById" resultType="course" parameterType="int">
+        select *from st_course where couId=#{couId}
+    </select>
+</mapper>

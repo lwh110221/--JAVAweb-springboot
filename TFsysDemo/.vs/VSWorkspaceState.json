@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\resources",
+    "\\src\\main\\resources\\templates",
+    "\\src\\main\\resources\\templates\\login"
+  ],
+  "SelectedNode": "\\src\\main\\resources\\templates\\login\\login.html",
+  "PreviewInSolutionExplorer": false
+}

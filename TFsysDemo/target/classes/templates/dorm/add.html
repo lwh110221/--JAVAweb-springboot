@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加宿舍信息</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='studnet',Url='dorm')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">添加宿舍信息</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>请输入宿舍地址号与地址</p>
+                            <form th:action="@{/dorm/add}" method="post">
+                                <div class="form-group">
+                                    <label for="name">宿舍号:</label>
+                                    <input type="text" class="form-control" name="dormNum" id="name">
+                                    <p style="color: red" th:if="${#fields.hasErrors('dorm.dormNum')}" th:errors="${dorm.dormNum}"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="classGrade">宿舍地址:</label>
+                                    <input type="text" class="form-control" name="dormAddress" id="classGrade">
+                                    <p style="color: pink" th:if="${#fields.hasErrors('dorm.dormAddress')}" th:errors="${dorm.dormAddress}"></p>
+                                </div>
+                                <button type="submit" class="btn btn-primary">提交</button>
+                                <button type="submit" class="btn iq-bg-danger">取消</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

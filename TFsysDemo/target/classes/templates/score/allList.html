@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='score',Url='score/allList')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title" th:text="${couName}+'单科排名'"></h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>该页面的信息无法编辑与新增</p>
+                            <div class="row justify-content-between">
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="user_list_datatable_info" class="dataTables_filter">
+                                        <form class="mr-3 position-relative" th:action="@{/score/allList}">
+                                            <div class="form-group mb-0" style="width: 300px">
+                                                <input type="search" name="couName" style="float: left"class="form-control" id="exampleInputSearch" placeholder="请输入学科全称" aria-controls="user-list-table">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">排名</th>
+                                    <th scope="col">名称</th>
+                                    <th scope="col">成绩</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="list,itemState:${SubjectList}">
+                                    <td th:text="${itemState.count}"></td>
+                                    <td th:text="${list.name}"></td>
+                                    <td th:text="${list.grade}"></td>
+                                </tr>
+                                <tr th:if="${SubjectList.isEmpty()}">
+                                    <td>当前无信息,请按学科全称搜索</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

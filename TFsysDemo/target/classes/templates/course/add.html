@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加课程</title>
+    <div th:include="common/css::css"></div>
+</head>
+<script>
+    function validate(){
+        var couName=document.getElementById("couName").value;
+        var couGrade=document.getElementById("couGrade").value;
+        var couTime=document.getElementById("couTime").value;
+        if(couGrade===""||couName===""||couTime===""){
+            if(couName===""){
+                alert("课程名称不能为空")
+            }
+            if(couGrade===""){
+                alert("课程学分不能为空")
+            }
+            if(couTime===""){
+                alert("课程学时不能为空")
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+</script>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='course',Url='course/list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">添加课程信息</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>请输入课程名称，学分与学时</p>
+                            <form th:action="@{/course/add}" method="post">
+                                <div class="form-group">
+                                    <label for="couName">课程名称:</label>
+                                    <input type="text" class="form-control" name="couName" id="couName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="couGrade">课程学分:</label>
+                                    <input type="text" class="form-control" name="couGrade" id="couGrade">
+                                </div>
+                                <div class="form-group">
+                                    <label for="couTime">课程学时:</label>
+                                    <input type="text" class="form-control" name="couTime" id="couTime">
+                                </div>
+                                <input type="hidden" name="major" th:value="${param.major}">
+                                <button type="submit" class="btn btn-primary" onclick="return validate()" >提交</button>
+                                <button type="submit" class="btn iq-bg-danger">取消</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

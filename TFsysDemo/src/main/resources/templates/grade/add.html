@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:include="common/css::css"></div>
+</head>
+<script>
+    function validate(){
+        if(document.getElementById("stuNumber").value===""){
+            alert("请输入学号");
+            return false;
+        }else{
+            return true;
+        }
+    }
+</script>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='course',Url='grade/list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">输入学号</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <p>请输入学号</p>
+                            <form th:action="@{/grade/ReElection}" method="get">
+                                <div class="form-group">
+                                    <label for="stuNumber">学号:</label>
+                                    <input type="text" class="form-control" name="stuNumber" id="stuNumber">
+                                </div>
+                                <button type="submit" class="btn btn-primary"onclick="return validate()" >进入补选界面</button>
+                                <button type="submit" class="btn iq-bg-danger">取消</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+spring:
+  messages:
+    basename: i18h.login
+  datasource:
+    # 数据库用户名和密码
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/student?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20
+      useGlobalDataSourceStat: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+# 热部署
+  thymeleaf:
+    cache: false
+  freemarker:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/java
+      exclude: static/**
+#发送验证邮件
+  mail:
+    protocol: smtp
+    host: smtp.qq.com
+    port: 465
+    #自己邮箱和协议密码
+    username: 2285813721@qq.com
+    password: clmpyffzzrrodjia
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+# 整合mybatis
+mybatis:
+  type-aliases-package: com.example.springweb.pojo
+  mapper-locations: /mapper/*.xml
+server:
+  tomcat:
+    uri-encoding: utf-8
+  port: 8014
+# 日志
+logging:
+  level:
+    root: info
+    org.springframework.web: debug
+  file:
+    path: /www/wwwroot/default/log
+# 分页插件配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+# 自定义参数
+#邮件验证路径
+severUrl: "http://localhost:8014/validMail?confirmCode="
+#图片上传路径
+imgFile: "D://uploads/images/"
+
+
