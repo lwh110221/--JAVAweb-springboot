@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩信息</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='course',Url='grade/list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">成绩信息</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div style="width: 250px;float: left">
+                                <form class="mr-3 position-relative" th:action="@{/grade/search}" method="post">
+                                    <div class="form-group mb-0">
+                                        <input type="search" class="form-control" id="exampleInputSearch" placeholder="请搜索" name="searchContent" aria-controls="user-list-table">
+                                    </div>
+                                </form>
+                            </div>
+                            <button style="float: left" type="button" class="btn mb-3 btn-primary rounded-pill"><i class="ri-bill-fill"></i><a style="color: white" th:href="@{/grade/add}">补选</a></button>
+                            <div class="table-responsive">
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>学号</th>
+                                        <th>课程号</th>
+                                        <th>姓名</th>
+                                        <th>课程名</th>
+                                        <th>成绩</th>
+                                        <th>绩点</th>
+                                        <th>所属专业</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="list:${gradeList}">
+                                        <td th:text="${list.stuNumber}"></td>
+                                        <td th:text="${list.couId}"></td>
+                                        <td th:text="${list.student.name}"></td>
+                                        <td th:text="${list.course.couName}"></td>
+                                        <td th:text="${list.grade}"></td>
+                                        <td th:text="${list.point}"></td>
+                                        <td th:text="${list.course.major}"></td>
+                                        <td>
+                                            <a style="margin-bottom: 0;height: 40px;" class="iq-icons-list" th:href="@{/grade/editor(stuNumber=${list.stuNumber},couId=${list.couId})}"><i class="las la-edit"></i>编辑</a>
+                                            <a style="margin-bottom: 0;height: 40px;"class="iq-icons-list" th:href="@{/grade/delete(stuNumber=${list.stuNumber},couId=${list.couId})}"><i class="ion-trash-b"></i>退课</a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                                <div style="float: right" class="col-md-6" th:if="${pageInfo!=null}">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            <li class="page-item">
+                                                <a class="page-link" th:href="@{/grade/list(pageNum=${pageInfo.prePage})}">上一页</a>
+                                            </li>
+                                            <li th:each="page:${pageInfo.getNavigatepageNums()}" th:class="${pageInfo.pageNum==page?'page-item active':''}">
+                                                <a class="page-link" th:href="@{/grade/list(pageNum=${page})}">[[${page}]]</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" th:href="@{/grade/list(pageNum=${pageInfo.nextPage})}">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

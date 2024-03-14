@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:include="common/css::css"></div>
+</head>
+<script>
+    function abc(){
+        var age = document.getElementById("age").value;
+        var file = document.getElementById("file").value;
+        if(age===""){
+            age=0;
+        }
+        document.getElementById("age").value=age;
+        console.log(file);
+        if(file===""){
+            alert("头像图片必须上传");
+            return false;
+        }else{
+            return true
+        }
+    }
+</script>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='studnet',Url='list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="iq-card">
+                        <div class="iq-card-body p-0">
+                            <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+                                <div class="iq-card">
+                                    <div class="iq-card-header d-flex justify-content-between">
+                                        <div class="iq-header-title">
+                                            <h4 class="card-title">学生信息</h4>
+                                        </div>
+                                    </div>
+                                    <div class="iq-card-body">
+                                        <form th:action="@{/student/editor}" enctype="multipart/form-data" method="post">
+                                            <div class="form-group row align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="profile-img-edit">
+                                                        <img class="profile-pic" th:src="@{'/uploads/images/'+${Stu.stuPic}}" alt="profile-pic">
+                                                        <div class="p-image">
+                                                            <i class="ri-pencil-line upload-button"></i>
+                                                            <input class="file-upload" type="file" id="file" name="file">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class=" row align-items-center">
+                                                <div class="form-group col-sm-6">
+                                                    <label for="fname">姓名:</label>
+                                                    <input type="text" class="form-control" id="fname" name="name" th:value="${Stu.name}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.name')}" th:errors="${student.name}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="lname">专业班级:</label>
+                                                    <input type="text" class="form-control" id="lname" name="majorClass" th:value="${Stu.majorClass}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.majorClass')}" th:errors="${student.majorClass}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="aname">专业全称</label>
+                                                    <input type="text" class="form-control" id="aname" name="major" th:value="${Stu.major}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.major')}" th:errors="${student.major}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="uname">学号:</label>
+                                                    <input type="text" class="form-control" id="uname" name="stuNumber" th:value="${Stu.stuNumber}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.stuNumber')}" th:errors="${student.stuNumber}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="cname">宿舍地址:</label>
+                                                    <input type="text" class="form-control" id="cname" name="dormNumber" th:value="${Stu.dormNumber}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.dormNumber')}" th:errors="${student.dormNumber}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label for="age">年龄:</label>
+                                                    <input type="text" class="form-control" id="age" name="age" th:value="${Stu.age}">
+                                                    <p style="color: red" th:if="${#fields.hasErrors('student.age')}" th:errors="${student.age}"></p>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <label class="d-block">性别:</label>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadio6" name="sex" value="男" class="custom-control-input" th:checked="${Stu.sex=='男'}?true:false">
+                                                        <label class="custom-control-label" for="customRadio6"> 男 </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" id="customRadio7" name="sex" value="女" class="custom-control-input" th:checked="${Stu.sex=='女'}?true:false">
+                                                        <label class="custom-control-label" for="customRadio7"> 女 </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="dob">入学日期:</label>
+                                                        <input type="date" class="form-control" id="dob" th:value="${#dates.format(Stu.stuDay,'yyyy-MM-dd')}" name="stuDay">
+                                                        <p style="color: red" th:if="${#fields.hasErrors('student.stuDay')}" th:errors="${student.stuDay}"></p>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="StuNum" th:value="${Stu.stuNumber}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary mr-2" onsubmit="return abc()">提交</button>
+                                            <button type="reset" class="btn iq-bg-danger">重置</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>

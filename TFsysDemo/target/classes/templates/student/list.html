@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:include="common/css::css"></div>
+</head>
+<body>
+<!-- loader Start -->
+<div id="loading" style="display: none;">
+    <div id="loading-center">
+    </div>
+</div>
+<!-- loader END -->
+<!-- Wrapper Start -->
+<div class="wrapper">
+    <div th:include="common/top :: top"></div>
+    <div th:include="common/left :: left(activeUrl='studnet',Url='list')"></div>
+    <div id="content-page" class="content-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="iq-card">
+                        <div class="iq-card-header d-flex justify-content-between">
+                            <div class="iq-header-title">
+                                <h4 class="card-title">学生基本信息</h4>
+                            </div>
+                        </div>
+                        <div class="iq-card-body">
+                            <div style="width: 250px;float: left">
+                                <form class="mr-3 position-relative" th:action="@{/student/search}" method="post">
+                                    <div class="form-group mb-0">
+                                        <input type="search" class="form-control" id="exampleInputSearch" placeholder="请输入学号并单击回车搜索" name="stuNumber" aria-controls="user-list-table">
+                                    </div>
+                                </form>
+                            </div>
+                            <button style="float: left" type="button" class="btn mb-3 btn-primary rounded-pill"><i class="ri-bill-fill"></i><a style="color: white" th:href="@{/student/add}">添加</a></button>
+                            <div class="table-responsive">
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>学号</th>
+                                        <th>性别</th>
+                                        <th>年龄</th>
+                                        <th>专业班级</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="stu:${StudentList}">
+                                        <td th:text="${stu.name}"></td>
+                                        <td th:text="${stu.getStuNumber()}"></td>
+                                        <td th:text="${stu.getSex()}"></td>
+                                        <td th:text="${stu.getAge()}"></td>
+                                        <td th:text="${stu.getMajorClass()}"></td>
+                                        <td>
+                                            <a style="margin-bottom: 0;height: 40px;" class="iq-icons-list" th:href="@{/student/editor(stuNumber=${stu.getStuNumber()})}"><i class="las la-edit"></i>编辑</a>
+                                            <a style="margin-bottom: 0;height: 40px;" class="iq-icons-list" th:href="@{/student/delete(stuNumber=${stu.getStuNumber()})}"><i class="ion-trash-b"></i>删除</a>
+                                            <a style="margin-bottom: 0;height: 40px;" class="iq-icons-list" th:href="@{/student/info(stuNumber=${stu.getStuNumber()})}"><i class="las la-tasks"></i>查看</a>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${StudentList==null}">
+                                        <td>暂无信息,请检查输入学号是否正确</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                                <div style="float: right" class="col-md-6" th:if="${pageInfo!=null}">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            <li class="page-item">
+                                                <a class="page-link" th:href="@{/student/list(pageNum=${pageInfo.prePage})}">上一页</a>
+                                            </li>
+                                            <li th:each="page:${pageInfo.getNavigatepageNums()}" th:class="${pageInfo.pageNum==page?'page-item active':''}">
+                                                <a class="page-link" th:href="@{/student/list(pageNum=${page})}">[[${page}]]</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" th:href="@{/student/list(pageNum=${pageInfo.nextPage})}">下一页</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:include="common/js::js"></div>
+</body>
+</html>
